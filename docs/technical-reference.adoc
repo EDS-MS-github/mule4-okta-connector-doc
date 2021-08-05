@@ -1,0 +1,1016 @@
+= Okta Connector Reference
+
+The Okta Connector provides connectivity to the Okta Rest API. This connector functions within a Mule application as a secure opening through which you can access.
+
+
+[[okta-configuration]]
+== Configurations
+
+[%header%autowidth.spread]
+|===
+|Sr.No |Name |Type |Description |Default Value |Required
+|1 |Name |String |The name for this configuration. Connectors reference the configuration with this name. | |Required
+|2 |Connection |
+ <<OktaBasicAuth, Basic Authentication>> {nbsp} |The connection types to provide to this configuration. | |Required
+|===
+
+== Connection Types
+
+[[OktaBasicAuth]]
+=== Basic Authentication
+
+[%header%autowidth.spread]
+|===
+|Sr.No |Name |Type |Description |Default Value |Required
+|1 |Base Uri |String | | |Required
+|2 |API Key |String | | |Required
+|3 |Connection timeout|Number |Connection timeout for the request |30 |
+|4 |Connection Timeout Unit | ⦁NANOSECONDS  ⦁MICROSECONDS  ⦁MILLISECONDS  ⦁SECONDS  ⦁MINUTES ⦁HOURS ⦁DAYS |Time unit to use in the Timeout configurations |SECONDS |
+|5 |TLS configuration |Tls |Protocol to use for communication. Valid values are HTTP and HTTPS. Default value is HTTP. When using HTTPS the HTTP communication is going to be secured using TLS / SSL. If HTTPS was configured as protocol then the user needs to configure at least the keystore in the tls:context child element of this listener-config. | |
+|6 |Reconnection |Reconnection |When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment fails if the test doesn't pass after exhausting the associated reconnection strategy. | |
+|===
+
+
+== Supported Operations
+
+
+* <<Activate or Deactivate Authorization Server>> {nbsp}
+* <<Add Application>> {nbsp}
+* <<Add Identity Provider>> {nbsp}
+* <<Add Group>> {nbsp}
+* <<Change Password>> {nbsp}
+* <<Change Recovery Question>> {nbsp}
+* <<Create Authorization Server>> {nbsp}
+* <<Create Policy>> {nbsp}
+* <<Create Rule>> {nbsp}
+* <<Create Session with Session Token>> {nbsp}
+* <<Create User>> {nbsp}
+* <<List Authorization Servers>> {nbsp}
+* <<List Users>> {nbsp}
+* <<Register New Client>> {nbsp}
+* <<Update Authorization Server>> {nbsp}
+
+
+
+[[ActivateorDeactivateAuthorizationServer]]
+== Activate or Deactivate Authorization Server
+
+`<okta:activate-or-deactivate-authorization-server>`
+
+Makes a Custom Authorization Server for use by clients *OR* Makes a Custom Authorization Server unavailable to clients. An inactive Custom Authorization Server can be returned to ACTIVE status by activating it again.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Auth server id a| String | The ID of a Custom Authorization Server to activate | | Yes
+| Authorization server status a| | Use to activate or deactivate server | | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| 204 No Content
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[AddApplication]]
+== Add Application
+
+`<okta:add-application>`
+
+Provides operations to manage applications and/or assignments to users or groups for your organization.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Activate a| Boolean | Executes activation lifecycle operation when creating the app | False |
+| Application body a| Binary| Content of application which will be use to create application.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[AddIdentityProvider]]
+== Add Identity Provider
+
+`<okta:add-identity-provider>`
+
+Adds a new IdP to your organization.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Idp a| Binary| Content which will be use to create Idp.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[CreateAuthorizationServer]]
+== Create Authorization Server
+
+`<okta:create-authorization-server>`
+
+Creates a new Custom Authorization Server
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Authorization Server Properties a| Binary| Content which will be use to create Authorization server.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[CreateUser]]
+== Create User
+
+`<okta:create-user>`
+
+Creates a new user in your Okta organization with or without credentials.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Activate a| Boolean | Executes activation lifecycle operation when creating the user. | |
+| Provider a| Boolean | Indicates whether to create a user with a specified authentication provider.||
+| nextLogin a| String | With activate=true, if nextLogin=changePassword, a user is created, activated, and the password is set to EXPIRED, so user must change it the next time they log in.||
+| Create user a| Binary| Content which will be use to create user.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[RegisterNewClient]]
+== Register New Client
+
+`<okta:register-new-client>`
+
+Adds a new client Application to your organization.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Request body a| Binary| Content which will be use to create dynamic client.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|201 Created
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[ListAuthorizationServers]]
+== List Authorization Servers
+
+`<okta:list-authorization-servers>`
+
+Lists all Custom Authorization Servers in this Okta organization.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Q a| String | Searches the name and audiences of Authorization Servers for matching values ||
+| Limit a| Number | Specifies the number of Authorization Server results on a page | 200 |
+| After a | String | Specifies the pagination cursor for the next page of Authorization Servers ||
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[ListUsers]]
+== List Users
+
+`<okta:list-users>`
+
+Lists users in your organization with pagination in most cases. A subset of users can be returned that match a supported filter expression or search criteria.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Q a| String | Finds a user that matches firstName, lastName, and email properties ||
+| Filter a| String | Filters users with a supported expression for a subset of properties ||
+| Search a| String | Searches for users with a supported filtering expression for most properties ||
+| Limit a| Number | Specifies the number of Authorization Server results on a page | 200 |
+| After a | String | Specifies the pagination cursor for the next page of Authorization Servers ||
+| Sort By a| String | Specifies field to sort by (for search queries only) ||
+| Sort Order a| String | Specifies sort order asc or desc (for search queries only) ||
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[UpdateAuthorizationServer]]
+== Update Authorization Server
+
+`<okta:update-authorization-server>`
+
+Updates the Authorization Server identified by authServerId.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Auth server id a| String | Custom Authorization Server ID. You can find the ID in the Okta user interface. | | Yes
+| Request parameters a| Binary| Content which will be use to update authorization server.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[AddGroup]]
+== Add Group
+
+`<okta:add-group>`
+
+Adds a new Group with OKTA_GROUP type to your organization
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Request parameters a| Binary| Content which will be use to group.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+[[ChangePassword]]
+== Change Password
+
+`<okta:change-password>`
+
+Changes a user's password by validating the user's current password
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| User id a| String | id of user || Yes
+| Password body a| Binary| Content which will be use to change password.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+
+[[ChangeRecoveryQuestion]]
+== Change Recovery Question
+
+`<okta:change-recovery-question>`
+
+Changes a user's recovery question & answer credential by validating the user's current password.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| User id a| String | id of user || Yes
+| Parameters a| Binary| Content which will be use to change recovery question.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[CreatePolicy]]
+== Create Policy
+
+`<okta:create-policy>`
+
+Creates a policy.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Params a| Binary| Content which will be use to create policy.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[CreateRule]]
+== Create Rule
+
+`<okta:create-rule>`
+
+Creates a rule by policy id.
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Policy id a| String | The Policy ID || Yes
+| Policy rule a| Binary| Content which will be use to create policy rule.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+[[CreateSessionwithSessionToken]]
+== Create Session with Session Token
+
+`<okta:create-session-with-session-token>`
+
+Creates a new session for a user with a valid session token. Use this API if, for example, you want to set the session cookie yourself instead of allowing Okta to set it, or want to hold the session ID in order to delete a session via the API instead of visiting the logout URL.
+
+* Note: To get https://developer.okta.com/docs/reference/api/authn/#primary-authentication-with-public-application[Session Token]
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+
+| Additional fields a| String | Additional fields ||
+| Session token a| Binary| Session token obtained via Authentication API.  | #[payload] | Yes
+| Configuration a| String |  The name of the configuration to be used to execute this component |  | Yes
+| Response Timeout a| Number |  The timeout for request to the remote service. |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  A time unit which qualifies the Response Timeout |  | {nbsp}
+| Target Variable a| String |  The name of the variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+|Type | Object
+
+|===
+
+=== Configurations
+
+* <<OktaBasicAuth>> {nbsp}
+
+=== Throws
+
+* OKTA:BAD_REQUEST {nbsp}
+* OKTA:CONNECTIVITY {nbsp}
+* OKTA:FORBIDDEN {nbsp}
+* OKTA:INTERNAL_SERVER_ERROR {nbsp}
+* OKTA:NOT_FOUND {nbsp}
+* OKTA:REMOTELY_CLOSED {nbsp}
+* OKTA:RETRY_EXHAUSTED {nbsp}
+* OKTA:SERVICE_UNAVAILABLE {nbsp}
+* OKTA:TIMEOUT {nbsp}
+* OKTA:TOO_MANY_REQUEST {nbsp}
+* OKTA:UNAUTHORIZED {nbsp}
+
+
+
+== TYPES
+=== Http Proxy Configuration
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Host |String |Host where the proxy requests is sent. | |
+|2 |Port |Number |Port where the proxy requests is sent. | |
+|3 |Username |String |The username to authenticate against the proxy. | |
+|4 |Password |String |The password to authenticate against the proxy. | |
+|5 |Non Proxy Hosts |Array of String |A list of hosts against which the proxy should not be used. | |
+|===
+
+=== Tls
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Enabled Protocols |String |A comma separated list of protocols enabled for this context. | |
+|2 |Enabled Cipher Suites |String |A comma separated list of cipher suites enabled for this context. | |
+|3 |Trust Store |Trust Store | | |
+|4 |Key Store |Key Store | | |
+|===
+
+=== Trust Store
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Path |String |The location (which will be resolved relative to the current classpath and file system, if possible) of the trust store. | |
+|2 |Password |String |The password used to protect the trust store. | |
+|3 |Type |String |The type of store used. | |
+|4 |Algorithm |String |The algorithm used by the trust store. | |
+|5 |Insecure |Boolean |If true, no certificate validations will be performed, rendering connections vulnerable to attacks. Use at your own risk. | |
+
+|===
+
+=== Key Store
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Path |String |The location (which will be resolved relative to the current classpath and file system, if possible) of the key store. | |
+|2 |Type |String |The type of store used. ||
+|3 |Alias |String |When the key store contains many private keys, this attribute indicates the alias of the key that should be used. If not defined, the first key in the file will be used by default. ||
+|4 |Key Password |String |The password used to protect the private key. ||
+|5 |Password |String |The password used to protect the key store. ||
+|6 |Algorithm |String |The algorithm used by the key store. ||
+
+|===
+
+=== Reconnection
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Fails Deployment |Boolean |When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment fails if the test doesn’t pass after exhausting the associated reconnection strategy. ||
+|2 |Reconnection Strategy |⦁ Reconnect  ⦁ Reconnect Forever |The reconnection strategy to use. ||
+|===
+
+=== Reconnect
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Frequency |Number |How often in milliseconds to reconnect. ||
+|2 |Count |Number |How many reconnection attempts to make. ||
+|===
+
+=== ReconnectForever
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Frequency |Number |How often in milliseconds to reconnect. ||
+|===
+
+=== Expiration Policy
+[%header%autowidth.spread]
+|===
+|Sr.No |Field |Type |Description |Default Value |Required
+|1 |Max Idle Time |Number |A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it’s considered eligible for expiration. ||
+|2 |Time Unit |Enumeration, one of: ⦁ NANOSECONDS ⦁ MICROSECONDS ⦁ MILLISECONDS ⦁ SECONDS ⦁ MINUTES ⦁ HOURS ⦁ DAYS |A time unit that qualifies the maxIdleTime attribute. ||
+|===

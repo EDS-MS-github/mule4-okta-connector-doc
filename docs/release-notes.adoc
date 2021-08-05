@@ -1,0 +1,38 @@
+# OKTA Connector Release Notes - Mule 4
+
+== [Release date]
+
+## Version 1.0.0 - Compatibility
+
+The OKTA connector is compatible with:
+
+[%header%autowidth.spread]
+|===
+|Software |Version
+|Anypoint Studio |7.4.x
+|Mule |4.2.x and later
+|JDK |1.8.x and later
+|===
+
+== Features
+
+The Okta Connector provides connectivity to the Okta Rest API. This connector functions within a Mule application as a secure opening through which you can access. Supported API'S are:
+
+* Apps
+* Authorization Server
+* Dynamic Client Registration
+* Group
+* Identity Provider
+* Policy
+* Session
+* User
+
+
+## Version 1.0.0 - Fixed in this Release
+N/A
+
+## Support Resources
+
+* Learn how to https://docs.mulesoft.com/mule-runtime/3.9/installing-connectors[Install Anypoint Connectors] using Anypoint Exchange.
+
+* Access the https://help.mulesoft.com/s/forum[MuleSoft Forum] to pose questions and get help from Mule’s broad community of users.
