@@ -1,6 +1,6 @@
 # OKTA Connector Release Notes - Mule 4
 
-== [Release date]
+== Sep 24, 2021
 
 ## Version 1.0.0 - Compatibility
 
